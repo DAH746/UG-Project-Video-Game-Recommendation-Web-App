@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}test{% endblock %}
+
+{% block pageTitleSideBarDisplay%}Testing page{% endblock pageTitleSideBarDisplay%}
+{% block pageTitleDisplay%}Welcome to the testing page!{% endblock pageTitleDisplay%}
+
+{%  block content %}
+
+    <p class="mb-4 pb-3 border-bottom text-left">
+        <strong><u>
+            Please note, this page just shows APIs working!
+        </u></strong>
+        <br><br>
+        Additionally, I would have liked to have each subsequent API call after Twitch's to have been based off of what is most popular on Twitch.
+        However, Twitch contains "categories" as opposed to "games". For example "Just chatting", "Music", "Special events" etc.
+        This means that I cannot use Twitch's top category, even if it is a game - as for a game, I would need to create cases to deal with this, which is not needed for this demo page.
+    </p>
+
+    <div class="container-fluid">
+
+{#Twitch row:#}
+
+        <H5 class="mb-4 pb-2">The current most popular category on Twitch is: <strong style="color:#20b2aa">{{ twitchTopCatagoryName }}</strong>!</H5>
+
+        <div class="row">
+
+        <img src="{{twitchTopCatagoryBoxArt}}" class="" alt="{{ twitchTopCatagoryName }}">
+
+         <div class="col-sm">
+
+                This row here is demonstrating the <strong>use of Twitch's</strong> api.
+                <p></p>
+                What is being utilised from the API is the "Box Art" image (found to the left of this text) and the green bolded text above in the title ({{ twitchTopCatagoryName }}).
+                <p></p>
+                To see what the results are on Twitch's site: please visit <a href="https://www.twitch.tv/directory?sort=VIEWER_COUNT">https://www.twitch.tv/directory?sort=VIEWER_COUNT</a>.
+            </p>
+         </div>
+        </div>
+
+        <p class="mb-4 pb-4 border-bottom text-center">
+            {# Twitch end #}
+{#IGDB row:#}
+
+        <H5 class="mb-4 pb-2">The current highest user rated game on IGDB (Internet Game Database) is: <strong style="color:#20b2aa">{{ igdbTopGameName }}</strong>!</H5>
+
+        <div class="row">
+
+        <img src="{{igdbTopGameImageURL}}" style="width: 150px;height: 200px;" alt="{{ igdbTopGameImageURL }}">
+
+         <div class="col-sm">
+
+                This row here is demonstrating the <strong>use of IGDB's</strong> api.
+                <p></p>
+                What is being utilised from the API is the "Box Art" image (found to the left of this text) and the green bolded text above in the title ({{ igdbTopGameName }}).
+                <br>This is in addition to the green statistics found in the next line!
+                <p></p>
+             {{ igdbTopGameName }} has an overall rating of <strong style="color:#20b2aa">{{ igdbTopGameRating }}%</strong>, with a total of <strong style="color:#20b2aa">{{ igdbTopGameRatingCount }}</strong>
+                votes.
+                <p></p>
+                To see the results on IGDB's site, please visit <a href="{{ igdbTopGameURL }}">{{ igdbTopGameURL }}</a>.
+            </p>
+         </div>
+    </div>
+    <p class="mb-4 pb-4 border-bottom text-center">
+    {# IGDB end #}
+
+{#Steam row:#}
+    <H5 class="mb-4 pb-2">Based off of <strong style="color:blue">IGDB's current top rated game </strong>(<strong style="color:#20b2aa">{{ igdbTopGameName }}</strong>), here is some information about it from Steam's storefront!</H5>
+
+    <div class="row">
+
+        <div class="col-sm">
+
+            Steam is currently charging <strong style="color:#20b2aa">{{ steamGamePrice }}</strong> for {{ igdbTopGameName }}!
+            <p></p>
+            A total of <strong style="color:#20b2aa">{{ steamTotalRecommendationCount }}</strong> Steam users have given {{ igdbTopGameName }} a positive review!
+            <p></p>
+                Here is the <strong style="color:#20b2aa">first video on Steam's storefront</strong> page for {{ igdbTopGameName }}:
+            <p></p>
+
+            <div  class="d-flex justify-content-center">
+                <video width="500"  controls>
+                    <source src="{{ steamFirstVideoOnStoreFrontURL }}" type="video/mp4">
+                </video>
+            </div>
+        <p></p>
+        To see the results on Steam's store front, for this game, please visit <a href="{{ steamAppUrl }}"> {{ steamAppUrl }}</a>.
+        </div>
+
+    </div>
+
+
+    <p class="mb-4 pb-4 border-bottom text-center">{# Steam end #}
+
+{#Youtube row#}
+    <H5 class="mb-4 pb-2">Finally, here are three returned results <strong style="color:#20b2aa"> according to YouTube's "relevance"</strong> on YouTube  for {{ igdbTopGameName }}! </H5>
+
+    <div class="row">
+
+        <div class="col-sm">
+
+            {% for video in youtubeVideoList %}
+            {#https://developers.google.com/youtube/player_parameters#}
+                Name of video: {{ video }}.
+                <p></p>
+                <div  class="d-flex justify-content-center">
+                    <iframe width="560" height="315" src= "{{ youtubeVideoList|get_item:video }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p></p>
+            {% endfor %}
+
+        To see the results on YouTube, please visit <a href="https://www.youtube.com/results?search_query={{ igdbTopGameName }}">https://www.youtube.com/results?search_query={{ igdbTopGameName }}</a>.
+        </div>
+
+    </div>
+
+
+
+
+{#        End Youtube#}
+    <p class="mb-4 pb-4 border-bottom text-center">
+
+
+    {#**********************************    END    ***********************************#}
+    <p class="mb-4 pb-4 border-bottom text-center">Executed? 31/01/2021</p>
+
+    </div>
+{% endblock content %}
+

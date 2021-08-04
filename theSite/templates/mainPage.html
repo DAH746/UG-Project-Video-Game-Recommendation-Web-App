@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block pageTitleDisplay%}Recommendation Page{% endblock pageTitleDisplay%}
+
+{% block isActive %}active{% endblock isActive %}
+
+{%  block content %}
+
+    <p class="mb-4 pb-3 border-bottom text-left">
+        Enter in a game of your choice to get a recommendation!
+    </p>
+
+
+{#    Input game - START#}
+    <form id="gameInput-form">
+      <div class="form-group">
+        <label for="gameInput">Enter Game Name Here:</label>
+        <input type="text" name='gameInputUser' class="form-control" id="gameInput" aria-describedby="gameInputField" placeholder="Name of game" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+{#    Input game - END#}
+
+{#<p></p>#}
+
+{#    Show recommended game - START #}
+
+    <div id = "recommendedGameArea">
+
+
+
+
+
+    </div>
+
+
+{#    Show recommended game - END #}
+
+
+
+{# ----------------- END ------------------ #}
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    $("#gameInput-form").submit(function (e) {
+        e.preventDefault();
+
+        $('#recommendedGameArea').html("<br>Please wait. Getting game information and calculating a recommendation...");
+        var serializedData = $(this).serialize();
+        console.log(serializedData);
+
+        $.ajax({
+            type: 'POST',
+            url: "ajax/inputtedGame",
+            data: serializedData,
+            success: function (response) {
+                $('#recommendedGameArea').html(response.recommendedGameArea);
+                sectionOneComplete = true;
+            },
+            error: function (response) {
+                $('#recommendedGameArea').html("<br>Game entered not found")
+                window.alert("The game entered could not be found, please try another.\n" +
+                    "\nIf the game was correctly entered, then there was an issue with one of the following" +
+                    " APIs: Steam, IGDB, Twitch, YouTube. \n\nPlease try another game.");
+            }
+        })
+    });
+</script>
+{% endblock javascript %}
