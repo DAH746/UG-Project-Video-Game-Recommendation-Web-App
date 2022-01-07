@@ -90,7 +90,7 @@ steamBaseUrl = 'http://api.steampowered.com/<interface name>/<method name>/v<ver
 #   YOUTUBE API:
 #   https://developers.google.com/youtube/v3/docs
 
-googleApiKey = 'AIzaSyBOwS60dSJe8wvHR6fHqhigW5Dd0fYQopM'
+googleApiKey = 'Removed - <Enter Yours Here>'
 youtubeBaseUrlForVideoSearchUsingApi = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=<SEARCHTERM>&type=video&key=' + googleApiKey
 # youtubeBaseUrlForVideoSearchUsingApi = 'https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&relevanceLanguage=en&regionCode=GB&maxResults=20&q=<SEARCHTERM>&type=video&key=' + googleApiKey
 youtubeBaseUrlForVideoWatch = 'https://www.youtube.com/embed/'
